@@ -22,27 +22,57 @@ def player(board):
     """
     Returns player who has the next turn on a board.
     """
-    raise NotImplementedError
+    count = 0
+    for i in range(3):
+        for j in range(3):
+            if board[i][j]:
+                count+=1
+    if count%2 ==0:
+        return X
+    elif count%2==1:
+        return O
+    elif count==O:
+        return initial_state()
 
 
 def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    raise NotImplementedError
-
+    act = []
+    for i in range(3):
+        for j in range(3):
+            if board[i][j]:
+                act.append(board[i][j])
+                
+    return set(act)
 
 def result(board, action):
     """
     Returns the board that results from making move (i, j) on the board.
     """
-    raise NotImplementedError
-
+    i, j = action
+    move = board.copy()
+    move[i][j] = player(board)                     #############################
+    return move
 
 def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
+    countx=0
+    county=0
+    countnone=0
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] == X:
+                countx+=1
+            elif board[i][j] == O:
+                county+=1
+            else:
+                countnone+=1
+
+
     raise NotImplementedError
 
 

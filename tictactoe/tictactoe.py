@@ -104,36 +104,46 @@ def minimax(board):
     """
     if terminal(board):
         return None
-    if player(board) == X:
-        return max_value(board)[1]
-    elif player(board) == O:
-        return min_value(board)[1]
-    
+    else:
+        if player(board) == X:
+            value, move = max_value(board)
+            return move
+        else:
+            value, move = min_value(board)
+            return move
+
+
 def max_value(board):
-    """
-    Returns the maximum possible value for the current player on the board.
-    """
-    vma = float('-inf')
-    move = None
     if terminal(board):
-        return utility(board)
-    
+        return utility(board), None
+
+    v = float('-inf')
+    move = None
     for action in actions(board):
-        vma = max(vma, min_value(result(board, action)[0]))
-        if vma > (min_value(result(board, action)[0])
-    return [vma, move]
+        # v = max(v, min_value(result(board, action)))
+        aux, act = min_value(result(board, action))
+        if aux > v:
+            v = aux
+            move = action
+            if v == 1:
+                return v, move
+
+    return v, move
+
 
 def min_value(board):
-    """
-    Returns the minimum possible value for the current player on the board.
-    """
-    vmi = float('inf')
     if terminal(board):
-        return utility(board)
-    
+        return utility(board), None
+
+    v = float('inf')
+    move = None
     for action in actions(board):
-        vmi = min(vmi, max_value(result(board, action)[0]))
-        if vma > ( max_value(result(board, action)[0]):
-    return [vmi, move]
+        # v = max(v, min_value(result(board, action)))
+        aux, act = max_value(result(board, action))
+        if aux < v:
+            v = aux
+            move = action
+            if v == -1:
+                return v, move
 
-
+    return v, move
